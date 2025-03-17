@@ -1,21 +1,23 @@
+const posts = require('../data/posts');
+
 const index = (req, res) => {
-    res.send("Lista di tutti i post");
+    res.json(posts);
 };
+
 
 const show = (req, res) => {
-    res.send(`Mostra il post con ID ${req.params.id}`);
-};
-
-const create = (req, res) => {
-    res.send("Crea un nuovo post");
-};
-
-const update = (req, res) => {
-    res.send(`Aggiorna il post con ID ${req.params.id}`);
+    const post = posts.find(p => p.id === parseInt(req.params.id));
+    if (!post) return res.status(404).json({ message: "Post non trovato" });
+    res.json(post);
 };
 
 const destroy = (req, res) => {
-    res.send(`Elimina il post con ID ${req.params.id}`);
+    const postIndex = posts.findIndex(p => p.id === parseInt(req.params.id));
+    if (postIndex === -1) return res.status(404).json({ message: "Post non trovato" });
+
+    posts.splice(postIndex, 1);
+    console.log("Lista aggiornata:", posts);
+    res.status(204).send(); // Nessun contenuto
 };
 
-module.exports = { index, show, create, update, destroy };
+module.exports = { index, show, destroy };
