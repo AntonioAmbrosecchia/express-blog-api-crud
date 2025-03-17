@@ -35,6 +35,7 @@ const create = (req, res) => {
     };
 
     posts.push(newPost);
+    console.log("Lista aggiornata:", posts);
     res.status(201).json(newPost);
 };
 
