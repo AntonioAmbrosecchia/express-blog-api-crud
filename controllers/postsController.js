@@ -22,6 +22,8 @@ const destroy = (req, res) => {
 
 const create = (req, res) => {
 
+    console.log('Dati in arrivo:', req.body);
+
     const { title, content } = req.body;
 
     if (!title || !content) {
@@ -35,7 +37,7 @@ const create = (req, res) => {
     };
 
     posts.push(newPost);
-    console.log("Lista aggiornata:", posts);
+    console.log("Nuovo post creato:", newPost);
     res.status(201).json(newPost);
 };
 
