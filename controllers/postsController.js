@@ -41,4 +41,26 @@ const create = (req, res) => {
     res.status(201).json(newPost);
 };
 
-module.exports = { create, index, show, destroy };
+const update = (req, res) => {
+    const postId = parseInt(req.params.id);
+    const { title, content } = req.body;
+
+
+    const post = posts.find(p => p.id === postId);
+    if (!post) return res.status(404).json({ message: "Post non trovato" });
+
+    if (!title || !content) {
+        return res.status(400).json({ message: "Title e content sono richiesti per aggiornare il post" });
+    }
+
+
+    post.title = title;
+    post.content = content;
+
+    console.log("Post aggiornato:", post);
+
+    res.status(200).json(post);
+};
+
+
+module.exports = { create, index, update, show, destroy };
