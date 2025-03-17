@@ -20,4 +20,21 @@ const destroy = (req, res) => {
     res.status(204).send(); // Nessun contenuto
 };
 
-module.exports = { index, show, destroy };
+const create = (req, res) => {
+    const { title, content } = req.body;
+
+    if (!title || !content) {
+        return res.status(400).json({ message: "Title e content sono richiesti" });
+    }
+
+    const newPost = {
+        id: posts.length + 1,
+        title,
+        content
+    };
+
+    posts.push(newPost);
+    res.status(201).json(newPost);
+};
+
+module.exports = { index, show, create, destroy };
