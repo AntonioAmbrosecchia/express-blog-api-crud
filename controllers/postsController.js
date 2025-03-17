@@ -17,10 +17,11 @@ const destroy = (req, res) => {
 
     posts.splice(postIndex, 1);
     console.log("Lista aggiornata:", posts);
-    res.status(204).send(); // Nessun contenuto
+    res.status(204).send();
 };
 
 const create = (req, res) => {
+
     const { title, content } = req.body;
 
     if (!title || !content) {
@@ -37,4 +38,4 @@ const create = (req, res) => {
     res.status(201).json(newPost);
 };
 
-module.exports = { index, show, create, destroy };
+module.exports = { create, index, show, destroy };
