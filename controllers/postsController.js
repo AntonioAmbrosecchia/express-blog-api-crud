@@ -4,12 +4,20 @@ const index = (req, res) => {
     res.json(posts);
 };
 
-
-const show = (req, res) => {
-    const post = posts.find(p => p.id === parseInt(req.params.id));
-    if (!post) return res.status(404).json({ message: "Post non trovato" });
-    res.json(post);
+const show = (req, res, next) => {
+    try {
+        const post = posts.find(p => p.id === parseInt(req.params.id));
+        if (!post) {
+            const error = new Error("Post non trovato");
+            error.status = 404;
+            throw error;
+        }
+        res.json(post);
+    } catch (err) {
+        next(err);
+    }
 };
+
 
 const destroy = (req, res) => {
     const postIndex = posts.findIndex(p => p.id === parseInt(req.params.id));
